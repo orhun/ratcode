@@ -4,7 +4,7 @@ use futures::StreamExt;
 use ratatui::{
     DefaultTerminal, Frame,
     layout::{Constraint, Direction, Layout},
-    style::{Color, Modifier, Style},
+    style::Stylize,
     text::{Line, Span, Text},
     widgets::{Block, Borders, Paragraph, Wrap},
 };
@@ -161,20 +161,12 @@ fn draw(frame: &mut Frame, app: &App) {
 
     let mut lines = Vec::new();
     for message in &app.messages {
-        let (label, style) = match message.role {
-            Role::User => (
-                "> ",
-                Style::default()
-                    .fg(Color::Cyan)
-                    .add_modifier(Modifier::BOLD),
-            ),
-            Role::Assistant => ("  ", Style::default()),
-            Role::Event => ("· ", Style::default().fg(Color::DarkGray)),
+        let label = match message.role {
+            Role::User => "> ".cyan().bold(),
+            Role::Assistant => "  ".into(),
+            Role::Event => "· ".dark_gray(),
         };
-        lines.push(Line::from(vec![
-            Span::styled(label, style),
-            Span::raw(&message.text),
-        ]));
+        lines.push(Line::from(vec![label, Span::raw(&message.text)]));
         lines.push(Line::default());
     }
 
@@ -200,7 +192,7 @@ fn draw(frame: &mut Frame, app: &App) {
             } else {
                 format!(" · {}", app.usage)
             }),
-            Span::styled("   Esc quit", Style::default().fg(Color::DarkGray)),
+            "   Esc quit".dark_gray(),
         ])),
         footer,
     );
