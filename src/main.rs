@@ -14,9 +14,12 @@ async fn main() -> Result<()> {
     dotenvy::dotenv().ok();
 
     let model = std::env::var("OPENAI_MODEL").unwrap_or_else(|_| openai::GPT_4O_MINI.into());
+
+    // TODO: Rig - OpenAI provider using the Chat Completions API.
     let agent = openai::CompletionsClient::from_env()?
         .agent(&model)
         .preamble(SYSTEM_PROMPT)
+        // TODO: Rig - Agent builder registers tools for automatic tool calling.
         .tool(ReadFile)
         .tool(WriteFile)
         .tool(RunShell)

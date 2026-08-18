@@ -87,9 +87,11 @@ async fn run_loop(
                 app.push(Role::Assistant, String::new());
                 app.status = "thinking".into();
 
+                // TODO: Rig - Manual conversation history supplied to each prompt.
                 let mut stream = agent
                     .stream_prompt(prompt.as_str())
                     .history(history.clone())
+                    // TODO: Rig - Automatic multi-turn tool execution, limited to 20 turns.
                     .max_turns(20)
                     .await;
                 let mut response = String::new();
@@ -108,10 +110,12 @@ async fn run_loop(
                         Ok(MultiTurnStreamItem::StreamAssistantItem(
                             StreamedAssistantContent::ToolCall { tool_call, .. },
                         )) => app.status = format!("calling {}", tool_call.function.name),
+                        // TODO: Rig - Streaming event emitted after tool execution is committed.
                         Ok(MultiTurnStreamItem::ToolExecutionCommitted { tool_call, .. }) => {
                             app.status = format!("used {}", tool_call.function.name);
                         }
                         Ok(MultiTurnStreamItem::FinalResponse(final_response)) => {
+                            // TODO: Rig - Final response provides token usage and generated messages.
                             let usage = final_response.usage();
                             app.usage =
                                 format!("{} in · {} out", usage.input_tokens, usage.output_tokens);
@@ -127,6 +131,7 @@ async fn run_loop(
                 }
 
                 if let Some(messages) = final_messages {
+                    // TODO: Rig - Persist Rig-generated messages for the next prompt.
                     history.extend(messages);
                 } else {
                     history.push(Message::user(prompt));

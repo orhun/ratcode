@@ -27,6 +27,7 @@ pub struct ReadFileArgs {
     path: String,
 }
 
+// TODO: Rig - Tool trait with typed arguments, output, error, and JSON schema.
 impl Tool for ReadFile {
     const NAME: &'static str = "read_file";
     type Error = ToolFailure;
@@ -47,6 +48,7 @@ impl Tool for ReadFile {
 
     async fn call(
         &self,
+        // TODO: Rig - ToolContext is provided to every tool invocation.
         _context: &mut ToolContext,
         args: Self::Args,
     ) -> Result<String, ToolFailure> {
