@@ -1,6 +1,8 @@
 mod tools;
 mod tui;
 
+// Inspired by <https://dev.to/joshmo_dev/rewriting-claude-code-in-rust-jbm>
+
 use anyhow::Result;
 use rig::{prelude::*, providers::openai};
 use tools::{ReadFile, RunShell, WriteFile};
