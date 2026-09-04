@@ -15,3 +15,7 @@ It demonstrates four things:
 ## Livestream
 
 Watch the Ratcode code walkthrough [on YouTube](https://www.youtube.com/live/hhw741JrQeQ&t=1611).
+
+## License
+
+Ratcode is available under the [MIT License](LICENSE).
