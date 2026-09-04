@@ -11,3 +11,7 @@ It demonstrates four things:
 - typed Tool implementations for reading, writing, and shell commands
 - Rig's automatic multi-turn tool loop
 - streaming text, tool events, conversation history, and token usage
+
+## Livestream
+
+Watch the Ratcode code walkthrough [on YouTube](https://www.youtube.com/live/hhw741JrQeQ&t=1611).
